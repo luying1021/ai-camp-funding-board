@@ -1,0 +1,2322 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>人工智慧資工營｜AI 科技新創募資看板</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(13, 27, 48, 0.88);
+      --panel-2: rgba(18, 38, 66, 0.88);
+      --card: rgba(255, 255, 255, 0.075);
+      --line: rgba(255, 255, 255, 0.14);
+      --text: #f4f7fb;
+      --muted: #9fb1c8;
+      --primary: #60a5fa;
+      --cyan: #22d3ee;
+      --green: #34d399;
+      --yellow: #fbbf24;
+      --red: #fb7185;
+      --purple: #a78bfa;
+      --shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(96, 165, 250, 0.28), transparent 28%),
+        radial-gradient(circle at 80% 0%, rgba(34, 211, 238, 0.25), transparent 28%),
+        radial-gradient(circle at 70% 88%, rgba(167, 139, 250, 0.20), transparent 30%),
+        linear-gradient(145deg, #07111f 0%, #0a1628 48%, #09101d 100%);
+    }
+
+    button, input, select, textarea { font: inherit; }
+
+    .shell {
+      width: min(1280px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 22px 0 56px;
+    }
+
+    header.hero {
+      display: grid;
+      grid-template-columns: 1.4fr 0.6fr;
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 16px;
+    }
+
+    .hero-card, .mini-card, .panel {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.105), rgba(255,255,255,0.055));
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+    }
+
+    .hero-card {
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      top: -80px;
+      width: 260px;
+      height: 260px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(34, 211, 238, 0.32), transparent 65%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--cyan);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 54px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+
+    .subtitle {
+      margin: 14px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 900px;
+    }
+
+    .status-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .mini-card {
+      padding: 16px;
+    }
+
+    .status-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--line);
+      color: var(--text);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--yellow);
+      box-shadow: 0 0 18px currentColor;
+    }
+
+    .dot.ok { background: var(--green); color: var(--green); }
+    .dot.bad { background: var(--red); color: var(--red); }
+
+    nav.tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 16px 0;
+      padding: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid var(--line);
+    }
+
+    .tab-btn {
+      border: 0;
+      border-radius: 999px;
+      color: var(--muted);
+      background: transparent;
+      padding: 11px 16px;
+      cursor: pointer;
+      font-weight: 900;
+      transition: 0.18s ease;
+    }
+
+    .tab-btn:hover { color: var(--text); background: rgba(255,255,255,0.07); }
+    .tab-btn.active { color: #06111f; background: linear-gradient(135deg, var(--cyan), var(--primary)); }
+    .teacher-only.hidden { display: none !important; }
+
+    .panel {
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid.two { grid-template-columns: 0.95fr 1.05fr; }
+    .grid.three { grid-template-columns: repeat(3, 1fr); }
+
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .stat .label { color: var(--muted); font-size: 13px; font-weight: 800; }
+    .stat .value { margin-top: 6px; font-size: 28px; font-weight: 1000; letter-spacing: -0.02em; }
+    .stat .sub { margin-top: 4px; color: var(--muted); font-size: 13px; }
+
+    h2, h3 { margin: 0; letter-spacing: -0.02em; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 18px; }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .section-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+
+    .current-stage .section-head {
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    #teacherCurrentControl {
+      min-width: 0 !important;
+      max-width: 100%;
+      margin-left: auto;
+    }
+
+    #teacherCurrentControl .pill {
+      white-space: normal;
+      max-width: min(340px, 100%);
+      line-height: 1.45;
+      text-align: center;
+      justify-content: center;
+      padding: 8px 12px;
+    }
+
+    .current-stage {
+      padding: 20px;
+      border-radius: 24px;
+      background:
+        linear-gradient(135deg, rgba(34,211,238,0.16), rgba(96,165,250,0.12)),
+        rgba(255,255,255,0.07);
+      border: 1px solid rgba(34,211,238,0.22);
+    }
+
+    .current-name {
+      font-size: var(--current-name-size, clamp(32px, 6vw, 72px));
+      font-weight: 1000;
+      line-height: var(--current-name-line, 1);
+      letter-spacing: var(--current-name-spacing, -0.05em);
+      margin: 10px 0;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      text-wrap: balance;
+    }
+
+    .money-big {
+      font-size: clamp(32px, 6vw, 64px);
+      font-weight: 1000;
+      color: var(--green);
+      letter-spacing: -0.05em;
+      text-shadow: 0 0 32px rgba(52, 211, 153, 0.28);
+    }
+
+    .energy-wrap {
+      margin-top: 16px;
+      padding: 8px;
+      border-radius: 999px;
+      background: rgba(3, 7, 18, 0.55);
+      border: 1px solid rgba(255,255,255,0.14);
+      overflow: hidden;
+    }
+
+    .energy-bar {
+      width: 0%;
+      min-width: 34px;
+      height: 30px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--green), var(--cyan), var(--primary));
+      box-shadow: 0 0 28px rgba(34,211,238,0.36);
+      transition: width 0.45s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .energy-bar::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.42), transparent);
+      transform: translateX(-100%);
+      animation: shine 1.8s infinite;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+
+    .energy-scale {
+      position: relative;
+      height: 76px;
+      margin: 8px 24px 0;
+    }
+
+    .scale-tick, .milestone-marker {
+      position: absolute;
+      transform: translateX(-50%);
+      text-align: center;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .scale-tick {
+      top: 0;
+    }
+
+    .scale-tick::before {
+      content: "";
+      display: block;
+      width: 1px;
+      height: 14px;
+      margin: 0 auto 5px;
+      background: rgba(255,255,255,0.36);
+    }
+
+    .scale-tick span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .milestone-marker {
+      top: 38px;
+      color: var(--yellow);
+      font-size: 10px;
+      font-weight: 1000;
+      text-shadow: 0 0 12px rgba(251,191,36,0.45);
+    }
+
+    .milestone-marker::before {
+      content: "▲";
+      display: block;
+      line-height: 1;
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+
+    .scale-tick.edge-start, .milestone-marker.edge-start {
+      transform: translateX(0);
+    }
+
+    .scale-tick.edge-end, .milestone-marker.edge-end {
+      transform: translateX(-100%);
+    }
+
+    .current-stage.milestone-flash {
+      animation: milestonePulse 0.85s ease;
+    }
+
+    .current-stage.bronze-flash {
+      animation: bronzePulse 3.8s ease;
+    }
+
+    .current-stage.silver-flash {
+      animation: silverPulse 3.8s ease;
+    }
+
+    .current-stage.golden-flash {
+      animation: superGoldenPulse 3.8s ease;
+    }
+
+    @keyframes milestonePulse {
+      0% { box-shadow: 0 0 0 rgba(251,191,36,0); transform: scale(1); }
+      35% { box-shadow: 0 0 46px rgba(251,191,36,0.72); transform: scale(1.012); }
+      100% { box-shadow: 0 0 0 rgba(251,191,36,0); transform: scale(1); }
+    }
+
+    @keyframes bronzePulse {
+      0% { box-shadow: 0 0 0 rgba(205,127,50,0); transform: scale(1); filter: saturate(1); }
+      18% { box-shadow: 0 0 76px rgba(205,127,50,0.90), 0 0 24px rgba(255,231,202,0.52) inset; transform: scale(1.016); filter: saturate(1.22); }
+      44% { box-shadow: 0 0 108px rgba(184,92,22,0.86), 0 0 38px rgba(255,231,202,0.66) inset; transform: scale(1.022); filter: saturate(1.38); }
+      100% { box-shadow: 0 0 0 rgba(205,127,50,0); transform: scale(1); filter: saturate(1); }
+    }
+
+    @keyframes silverPulse {
+      0% { box-shadow: 0 0 0 rgba(226,232,240,0); transform: scale(1); filter: saturate(1); }
+      18% { box-shadow: 0 0 82px rgba(226,232,240,0.88), 0 0 26px rgba(255,255,255,0.60) inset; transform: scale(1.018); filter: saturate(1.15); }
+      44% { box-shadow: 0 0 124px rgba(148,163,184,0.92), 0 0 42px rgba(255,255,255,0.80) inset; transform: scale(1.024); filter: saturate(1.28); }
+      100% { box-shadow: 0 0 0 rgba(226,232,240,0); transform: scale(1); filter: saturate(1); }
+    }
+
+    @keyframes superGoldenPulse {
+      0% { box-shadow: 0 0 0 rgba(251,191,36,0); transform: scale(1); filter: saturate(1); }
+      18% { box-shadow: 0 0 82px rgba(251,191,36,0.95), 0 0 26px rgba(255,255,255,0.55) inset; transform: scale(1.018); filter: saturate(1.35); }
+      42% { box-shadow: 0 0 128px rgba(255,215,0,0.96), 0 0 42px rgba(255,255,255,0.72) inset; transform: scale(1.026); filter: saturate(1.55); }
+      100% { box-shadow: 0 0 0 rgba(251,191,36,0); transform: scale(1); filter: saturate(1); }
+    }
+
+    .medal-burst {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at center, rgba(255, 236, 153, 0.34), transparent 34%),
+        radial-gradient(circle at 20% 20%, rgba(251, 191, 36, 0.28), transparent 20%),
+        radial-gradient(circle at 80% 28%, rgba(255, 255, 255, 0.18), transparent 18%),
+        rgba(0,0,0,0.16);
+      animation: medalBurstFade 4.4s ease forwards;
+    }
+
+    .medal-burst.bronze {
+      background:
+        radial-gradient(circle at center, rgba(255, 221, 185, 0.34), transparent 34%),
+        radial-gradient(circle at 18% 22%, rgba(205, 127, 50, 0.32), transparent 20%),
+        radial-gradient(circle at 82% 26%, rgba(255, 255, 255, 0.16), transparent 18%),
+        rgba(0,0,0,0.16);
+    }
+
+    .medal-burst.silver {
+      background:
+        radial-gradient(circle at center, rgba(241, 245, 249, 0.36), transparent 34%),
+        radial-gradient(circle at 18% 22%, rgba(203, 213, 225, 0.30), transparent 20%),
+        radial-gradient(circle at 82% 26%, rgba(255, 255, 255, 0.24), transparent 18%),
+        rgba(0,0,0,0.16);
+    }
+
+    .medal-burst.gold {
+      background:
+        radial-gradient(circle at center, rgba(255, 236, 153, 0.38), transparent 34%),
+        radial-gradient(circle at 20% 20%, rgba(251, 191, 36, 0.32), transparent 20%),
+        radial-gradient(circle at 80% 28%, rgba(255, 255, 255, 0.22), transparent 18%),
+        rgba(0,0,0,0.18);
+    }
+
+    .medal-burst-card {
+      padding: 24px 34px;
+      border-radius: 999px;
+      color: #fff7cc;
+      font-size: clamp(28px, 6vw, 72px);
+      font-weight: 1000;
+      letter-spacing: 0.06em;
+      text-align: center;
+      text-shadow: 0 0 18px rgba(251,191,36,0.95), 0 3px 24px rgba(0,0,0,0.65);
+      border: 2px solid rgba(255, 244, 180, 0.72);
+      background: linear-gradient(135deg, rgba(120,73,0,0.72), rgba(251,191,36,0.36), rgba(255,255,255,0.22));
+      box-shadow: 0 0 80px rgba(251,191,36,0.85);
+      animation: medalBurstPop 4.1s ease forwards;
+    }
+
+    .medal-burst.bronze .medal-burst-card {
+      color: #fff0df;
+      text-shadow: 0 0 18px rgba(205,127,50,0.98), 0 3px 24px rgba(0,0,0,0.65);
+      border-color: rgba(255, 224, 190, 0.76);
+      background: linear-gradient(135deg, rgba(97,47,13,0.78), rgba(205,127,50,0.45), rgba(255,231,202,0.26));
+      box-shadow: 0 0 80px rgba(205,127,50,0.78);
+    }
+
+    .medal-burst.silver .medal-burst-card {
+      color: #ffffff;
+      text-shadow: 0 0 18px rgba(226,232,240,0.98), 0 3px 24px rgba(0,0,0,0.68);
+      border-color: rgba(255, 255, 255, 0.78);
+      background: linear-gradient(135deg, rgba(71,85,105,0.78), rgba(203,213,225,0.48), rgba(255,255,255,0.30));
+      box-shadow: 0 0 86px rgba(226,232,240,0.82);
+    }
+
+    .medal-burst.gold .medal-burst-card {
+      color: #fff7cc;
+      text-shadow: 0 0 18px rgba(251,191,36,0.95), 0 3px 24px rgba(0,0,0,0.65);
+      border-color: rgba(255, 244, 180, 0.72);
+      background: linear-gradient(135deg, rgba(120,73,0,0.72), rgba(251,191,36,0.36), rgba(255,255,255,0.22));
+      box-shadow: 0 0 90px rgba(251,191,36,0.90);
+    }
+
+    @keyframes medalBurstFade {
+      0% { opacity: 0; }
+      10% { opacity: 1; }
+      82% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    @keyframes medalBurstPop {
+      0% { transform: scale(0.72) rotate(-2deg); opacity: 0; }
+      14% { transform: scale(1.05) rotate(1deg); opacity: 1; }
+      30% { transform: scale(0.98) rotate(0deg); }
+      78% { transform: scale(1.02); opacity: 1; }
+      100% { transform: scale(1.18); opacity: 0; }
+    }
+
+    .milestone-marker.bronze {
+      color: #cd7f32;
+      text-shadow: 0 0 14px rgba(205,127,50,0.78), 0 0 24px rgba(255,231,202,0.32);
+    }
+
+    .milestone-marker.bronze::before {
+      color: #cd7f32;
+      content: "▲";
+    }
+
+    .milestone-marker.silver {
+      color: #e2e8f0;
+      text-shadow: 0 0 14px rgba(226,232,240,0.80), 0 0 24px rgba(255,255,255,0.36);
+    }
+
+    .milestone-marker.silver::before {
+      color: #e2e8f0;
+      content: "▲";
+    }
+
+    .milestone-marker.super {
+      color: #fff1a8;
+      font-size: 11px;
+      text-shadow: 0 0 15px rgba(251,191,36,0.88), 0 0 26px rgba(255,255,255,0.45);
+    }
+
+    .milestone-marker.super::before {
+      content: "◆";
+      font-size: 16px;
+    }
+
+    .milestone-note {
+      margin-top: 10px;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 13px;
+    }
+
+    .team-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .team-row {
+      display: grid;
+      grid-template-columns: 54px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .rank {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.09);
+      font-weight: 1000;
+      color: var(--cyan);
+    }
+
+    .team-title { font-weight: 1000; }
+    .team-meta { color: var(--muted); font-size: 13px; margin-top: 3px; }
+
+    .small-bar-wrap {
+      margin-top: 8px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(3, 7, 18, 0.58);
+      overflow: hidden;
+    }
+
+    .small-bar {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--green), var(--cyan));
+      transition: width 0.35s ease;
+    }
+
+    .money { font-weight: 1000; color: var(--green); white-space: nowrap; }
+
+    .form-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    label.form-label {
+      display: grid;
+      gap: 7px;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    select, input, textarea {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.16);
+      color: var(--text);
+      background: rgba(3, 7, 18, 0.56);
+      border-radius: 14px;
+      padding: 12px 13px;
+      outline: none;
+    }
+
+    select:focus, input:focus, textarea:focus { border-color: rgba(34,211,238,0.68); box-shadow: 0 0 0 3px rgba(34,211,238,0.12); }
+    option { background: #0b1525; color: var(--text); }
+    textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
+
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+    .btn {
+      border: 0;
+      border-radius: 15px;
+      padding: 12px 16px;
+      color: #06111f;
+      background: linear-gradient(135deg, var(--cyan), var(--primary));
+      font-weight: 1000;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      box-shadow: 0 12px 28px rgba(34,211,238,0.15);
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+    .btn.secondary { background: rgba(255,255,255,0.09); color: var(--text); border: 1px solid var(--line); box-shadow: none; }
+    .btn.danger { background: linear-gradient(135deg, #fb7185, #f97316); color: #fff; }
+    .btn.green { background: linear-gradient(135deg, #34d399, #22d3ee); }
+
+    .helper-text {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+      margin-top: -4px;
+    }
+
+    .notice {
+      border: 1px solid rgba(34, 211, 238, 0.28);
+      background: rgba(34, 211, 238, 0.08);
+      color: #cffafe;
+      padding: 13px 15px;
+      border-radius: 16px;
+      line-height: 1.65;
+    }
+
+    .warning {
+      border-color: rgba(251, 191, 36, 0.34);
+      background: rgba(251, 191, 36, 0.08);
+      color: #fde68a;
+    }
+
+    .danger-note {
+      border-color: rgba(251, 113, 133, 0.34);
+      background: rgba(251, 113, 133, 0.08);
+      color: #fecdd3;
+    }
+
+    .history {
+      display: grid;
+      gap: 8px;
+      max-height: 360px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .history-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: var(--muted);
+    }
+
+    .history-item strong { color: var(--text); }
+
+    .score-card {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.06);
+      margin-bottom: 10px;
+    }
+
+    .score-card textarea { min-height: 74px; }
+
+    .score-ranking-panel {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(52, 211, 153, 0.22);
+      background: linear-gradient(180deg, rgba(52, 211, 153, 0.10), rgba(96, 165, 250, 0.055));
+    }
+
+    .score-ranking-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .score-ranking-head h3 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .score-ranking-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .score-ranking-row {
+      display: grid;
+      grid-template-columns: 72px 1fr 110px 116px;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.065);
+      border: 1px solid rgba(255,255,255,0.095);
+    }
+
+    .score-ranking-row.unscored {
+      opacity: 0.72;
+      background: rgba(255,255,255,0.035);
+    }
+
+    .rank-number {
+      font-weight: 1000;
+      color: var(--yellow);
+    }
+
+    .rank-score {
+      color: var(--green);
+      font-weight: 1000;
+      text-align: right;
+    }
+
+    .rank-count {
+      color: var(--muted);
+      text-align: right;
+      font-size: 13px;
+    }
+
+
+    .review-overview {
+      display: grid;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .teacher-review-row {
+      display: grid;
+      grid-template-columns: 110px 96px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 9px 10px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .teacher-review-row.own-review {
+      border-color: rgba(34,211,238,0.32);
+      background: rgba(34,211,238,0.075);
+    }
+
+    .teacher-review-name { font-weight: 1000; color: var(--text); }
+    .score-pill-small {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 26px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.09);
+      color: var(--green);
+      font-weight: 1000;
+    }
+
+    .own-score-editor {
+      display: grid;
+      grid-template-columns: 130px 1fr auto;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .team-editor-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .tab-page { display: none; }
+    .tab-page.active { display: block; }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 50;
+    }
+
+    .modal-backdrop.show { display: flex; }
+
+    .modal {
+      width: min(740px, 100%);
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: linear-gradient(180deg, rgba(15, 31, 55, 0.98), rgba(7, 17, 31, 0.98));
+      box-shadow: 0 30px 100px rgba(0,0,0,0.55);
+      padding: 22px;
+    }
+
+    .role-choice {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .role-card {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      padding: 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      text-align: left;
+      transition: 0.16s ease;
+    }
+
+    .role-card.active { border-color: rgba(34,211,238,0.85); background: rgba(34,211,238,0.12); }
+    .role-card strong { display: block; font-size: 20px; margin-bottom: 5px; }
+    .role-card span { color: var(--muted); line-height: 1.5; }
+
+    .login-pane { display: none; }
+    .login-pane.active { display: grid; gap: 12px; }
+
+
+    .student-picker {
+      position: relative;
+      display: grid;
+      gap: 8px;
+    }
+
+    .student-suggestions {
+      display: none;
+      max-height: 220px;
+      overflow-y: auto;
+      border: 1px solid rgba(34,211,238,0.28);
+      border-radius: 18px;
+      background: rgba(7, 17, 31, 0.92);
+      box-shadow: 0 16px 38px rgba(0,0,0,0.35);
+      padding: 8px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .student-suggestions.show { display: grid; gap: 6px; }
+
+    .student-suggestion {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.07);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 10px 12px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .student-suggestion:active,
+    .student-suggestion:hover {
+      border-color: rgba(34,211,238,0.72);
+      background: rgba(34,211,238,0.14);
+    }
+
+    .student-suggestion .number {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .student-suggestion-empty {
+      color: var(--muted);
+      padding: 10px 12px;
+      line-height: 1.5;
+    }
+
+    .empty {
+      color: var(--muted);
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px dashed rgba(255,255,255,0.18);
+      line-height: 1.7;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 920px) {
+      header.hero, .grid.two, .grid.three { grid-template-columns: 1fr; }
+      nav.tabs { border-radius: 20px; }
+      .tab-btn { flex: 1 1 130px; }
+      .team-row { grid-template-columns: 46px 1fr; }
+      .team-row .money { grid-column: 2; }
+      .score-card { grid-template-columns: 1fr; }
+      .score-ranking-head { align-items: start; flex-direction: column; }
+      .score-ranking-row { grid-template-columns: 54px 1fr; align-items: start; }
+      .rank-score, .rank-count { text-align: left; }
+      .role-choice { grid-template-columns: 1fr; }
+      .current-stage .section-head { display: block; }
+      #teacherCurrentControl { width: 100%; margin: 10px 0 0; }
+      #teacherCurrentControl .pill { width: 100%; max-width: 100%; }
+      .current-name {
+        font-size: var(--current-name-mobile-size, var(--current-name-size, clamp(30px, 10vw, 58px)));
+        line-height: var(--current-name-line, 1.04);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <div class="hero-card">
+        <p class="eyebrow">AI Startup Demo Day</p>
+        <h1>人工智慧資工營<br />AI 科技新創募資看板</h1>
+        <p class="subtitle">每一組都是一支科技新創團隊，用 AI 打造真正能解決問題的產品。學生與老師都能投入創業資金，資金能量條會即時同步更新。</p>
+      </div>
+      <div class="status-stack">
+        <div class="mini-card">
+          <div class="status-line"><span>同步狀態</span><span id="syncPill" class="pill"><span id="syncDot" class="dot"></span><span id="syncText">準備連線</span></span></div>
+          <div class="status-line"><span>目前身份</span><span id="actorPill" class="pill">尚未登入</span></div>
+          <div class="btn-row"><button id="switchIdentityBtn" class="btn secondary">切換身份</button><button id="changeStudentPasswordBtn" class="btn secondary" style="display:none;">修改密碼</button></div>
+        </div>
+        <div class="mini-card">
+          <div class="status-line"><span>活動代碼</span><span class="pill">ai-cs-camp-2026</span></div>
+          <div class="status-line"><span>投資單位</span><span class="pill">$1,000</span></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="notice">進入網頁後會自動連線 Firebase。學生登入後可投資與觀看即時資金；第一次登入會要求設定密碼，之後需輸入密碼。老師登入後可額外設定目前報告組別、評分與撰寫評論。</div>
+
+    <nav class="tabs" aria-label="主選單">
+      <button class="tab-btn active" data-tab="dashboard">即時募資看板</button>
+      <button class="tab-btn" data-tab="invest">我要投資</button>
+      <button class="tab-btn teacher-only hidden" data-tab="teacherScore">老師評分</button>
+      <button class="tab-btn teacher-only hidden" data-tab="settings">同步與設定</button>
+    </nav>
+
+    <main>
+      <section id="dashboard" class="tab-page active">
+        <div class="grid two">
+          <div class="panel current-stage">
+            <div class="section-head">
+              <div>
+                <h2>目前報告組別</h2>
+                <p>這一組獲得的創業資金會像能量條一樣即時增加。</p>
+              </div>
+              <div id="teacherCurrentControl" class="teacher-only hidden"></div>
+            </div>
+            <div id="currentTeamName" class="current-name">第 1 組</div>
+            <div id="currentTeamMoney" class="money-big">$0</div>
+            <div class="energy-wrap"><div id="currentEnergyBar" class="energy-bar"></div></div>
+            <div id="energyScale" class="energy-scale"></div>
+            <div id="currentTeamMeta" class="team-meta" style="margin-top: 12px;">等待資金注入中。</div>
+            <div class="btn-row" style="margin-top: 12px;">
+              <button id="enableSoundBtn" class="btn secondary" type="button">啟用音效</button>
+              <span id="soundPill" class="pill"><span id="soundDot" class="dot"></span><span id="soundText">等待點擊啟用音效</span></span>
+            </div>
+            <div id="milestoneMeta" class="milestone-note">資金突破 $1,000、$3,000、$5,000、$10,000、$20,000、$50,000 時會播放不同音效；進度條只標出 $5k、$10k 銅牌、$20k 銀牌、$50k 黃金大關。</div>
+          </div>
+
+          <div class="panel">
+            <div class="section-head">
+              <div>
+                <h2>全場資金概況</h2>
+                <p>學生每人 $10,000，老師每人 $100,000，皆以 $1,000 為單位投資。</p>
+              </div>
+            </div>
+            <div class="grid three">
+              <div class="stat"><div class="label">已投入總資金</div><div id="totalInjected" class="value">$0</div><div class="sub">所有投資合計</div></div>
+              <div class="stat"><div class="label">已送出投資筆數</div><div id="totalTxCount" class="value">0</div><div class="sub">送出後不可修改</div></div>
+              <div class="stat"><div class="label">目前領先團隊</div><div id="leaderName" class="value" style="font-size: 22px;">尚無</div><div id="leaderMoney" class="sub">$0</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div class="panel">
+            <div class="section-head"><div><h2>人氣投資獎排行榜</h2><p>依目前獲得創業資金排序。</p></div></div>
+            <div id="rankingList" class="team-list"></div>
+          </div>
+          <div class="panel">
+            <div class="section-head"><div><h2>最新資金注入</h2><p>投資送出後會即時出現在這裡。</p></div></div>
+            <div id="recentInvestments" class="history"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="invest" class="tab-page">
+        <div class="grid two">
+          <div class="panel">
+            <div class="section-head"><div><h2>我要投入創業資金</h2><p>選擇想支持的 AI 新創團隊與金額。每筆投資送出後不能修改或取消；正式組員不能投資自己所在組別。</p></div></div>
+            <div id="investorSummary" class="notice warning">請先選擇身份。</div>
+            <div class="form-grid" style="margin-top: 14px;">
+              <label class="form-label">投資團隊
+                <select id="investTeamSelect"></select>
+              </label>
+              <label class="form-label">投資金額
+                <select id="investAmountSelect"></select>
+              </label>
+              <button id="submitInvestmentBtn" class="btn green">確認投資</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="section-head"><div><h2>我的投資紀錄</h2><p>這些紀錄已送出，不能再改動。</p></div></div>
+            <div id="myInvestments" class="history"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="teacherScore" class="tab-page teacher-only hidden">
+        <div class="panel">
+          <div class="section-head"><div><h2>老師評分與評論</h2><p>每位老師可針對每組輸入一個 0–100 分的專案分數，並留下評論。學生不會看到此頁。</p></div></div>
+          <div id="teacherScoreList"></div>
+          <div id="teacherScoreRanking"></div>
+        </div>
+      </section>
+
+      <section id="settings" class="tab-page teacher-only hidden">
+        <div class="grid two">
+          <div class="panel">
+            <div class="section-head"><div><h2>同步狀態</h2><p>此頁僅老師可見。若現場連線異常，可重新啟用同步。</p></div></div>
+            <div class="notice" id="syncDetail">正在準備同步。</div>
+            <div class="btn-row" style="margin-top: 14px;">
+              <button id="restartSyncBtn" class="btn secondary">重新啟用同步</button>
+              <button id="clearAllBtn" class="btn danger">重製成績</button>
+            </div>
+            <p class="footer-note">重製成績會清除資金、投資紀錄、老師評分與評論，並同步到所有裝置；學生密碼與組別設定會保留。</p>
+          </div>
+          <div class="panel">
+            <div class="section-head"><div><h2>目前報告組別</h2><p>老師在這裡切換現在上台的團隊，所有裝置的能量條會同步切換。</p></div></div>
+            <label class="form-label">選擇正在報告的組別
+              <select id="settingsCurrentTeamSelect"></select>
+            </label>
+            <div class="notice warning" style="margin-top: 14px;">音效只會在「目前報告組別」資金突破 $1,000、$3,000、$5,000、$10,000、$20,000、$50,000 時播放。進度條只標出 $5k、$10k 銅牌、$20k 銀牌、$50k 黃金大關；請在投影主機上先點「啟用音效」。</div>
+          </div>
+          <div class="panel">
+            <div class="section-head"><div><h2>組別設定</h2><p>預設 15 組。晚點拿到隊名後，可由老師在這裡調整名稱。</p></div></div>
+            <div class="form-grid">
+              <label class="form-label">組數
+                <input id="teamCountInput" type="number" min="1" max="30" step="1" />
+              </label>
+              <div id="teamEditor"></div>
+              <button id="saveTeamsBtn" class="btn">儲存組別設定</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="loginModal" class="modal-backdrop">
+    <div class="modal">
+      <p class="eyebrow">Choose your role</p>
+      <h2>請選擇身份</h2>
+      <p class="subtitle">學生第一次登入會設定自己的密碼，之後登入需輸入密碼；老師需輸入密碼才可進入評分與設定功能。</p>
+
+      <div class="role-choice">
+        <button id="chooseStudent" class="role-card active" type="button"><strong>我是學生</strong><span>可觀看即時資金、投入自己的 $10,000 創業資金。</span></button>
+        <button id="chooseTeacher" class="role-card" type="button"><strong>我是老師</strong><span>可投入 $100,000、設定目前組別、評分與評論。</span></button>
+      </div>
+
+      <div id="studentLoginPane" class="login-pane active">
+        <div class="student-picker">
+          <label class="form-label">學生姓名
+            <input id="studentLoginInput" placeholder="輸入姓氏或姓名，例如：陳、林、Ray" autocomplete="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <div id="studentSuggestList" class="student-suggestions" aria-label="學生姓名建議名單"></div>
+        </div>
+        <div class="helper-text">手機版請先打姓氏縮小名單，再點選下方出現的完整姓名。若第一次登入，系統會要求設定密碼。</div>
+        <button id="studentLoginBtn" class="btn">以學生身份進入</button>
+      </div>
+
+      <div id="teacherLoginPane" class="login-pane">
+        <label class="form-label">老師姓名
+          <select id="teacherLoginSelect"></select>
+        </label>
+        <label id="customTeacherWrap" class="form-label" style="display:none;">自行輸入老師姓名
+          <input id="customTeacherName" placeholder="例如：王老師" />
+        </label>
+        <label class="form-label">老師密碼
+          <input id="teacherPassword" type="password" inputmode="numeric" placeholder="請輸入密碼" />
+        </label>
+        <button id="teacherLoginBtn" class="btn">以老師身份進入</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot, serverTimestamp, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    const FIREBASE_CONFIG = {
+      apiKey: "AIzaSyDCZ9LYysUGPat_johupUZWANEjDM3lhAo",
+      authDomain: "electroneering-sumo-2026.firebaseapp.com",
+      projectId: "electroneering-sumo-2026",
+      storageBucket: "electroneering-sumo-2026.firebasestorage.app",
+      messagingSenderId: "914917679338",
+      appId: "1:914917679338:web:700eb5d095f68c3db8b793",
+      measurementId: "G-YH1DE64GZW"
+    };
+
+    const COLLECTION_NAME = "sumoTournamentStates";
+    const EVENT_ID = "ai-cs-camp-2026";
+    const TEACHER_PASSWORD = "8888";
+    const STUDENT_MASTER_KEY = "881021";
+    const STUDENT_BUDGET = 10000;
+    const TEACHER_BUDGET = 100000;
+    const INVEST_UNIT = 1000;
+    const DEFAULT_TEAM_COUNT = 15;
+    const FUNDING_MILESTONES = [1000, 3000, 5000, 10000, 20000, 50000];
+    const VISIBLE_MILESTONE_MARKERS = [5000, 10000, 20000, 50000];
+    const LOCAL_STATE_KEY = "aiCampFundingState:v1";
+    const LOCAL_ACTOR_KEY = "aiCampFundingActor:v1";
+
+    const STUDENTS = [
+      "卓耘綺", "蔡汶芳", "陳品亦", "林定禹", "方駿凱", "陳宥愷", "吳秉勳", "張為鈞", "林孟臻", "許子芸",
+      "洪儀霖", "張仕翰", "林昱誠", "徐堉仁", "許祐瑋", "陳柔蓁", "蔡宛霖", "廖瑾瑜", "李怡靜", "李庭宇",
+      "李庭任", "林沛均", "江杬翰", "陳獻禾", "陳汯均", "王柏鈞", "卓宇薇", "黃醴嬅", "翁婕瑜", "姚沁彤",
+      "黃楹喧", "吳湘琳", "藍元鴻", "蘇予禾", "陳姿聿", "陳品霏", "廖沄婕", "許凱翔", "蔡承勳", "劉懷謙",
+      "鄭宇哲", "謝欣妘", "鄭羽絜", "劉宸亦", "張義群", "蔡尚儒", "夏晨祐", "陳亞翟", "江宥霆", "林柏瀚",
+      "洪子弘", "吳承煜", "黃冠嶧", "唐郁程", "黃湧翔", "黃湧程", "辛宥毅", "吳岷宥", "果果", "佐哥",
+      "沁祭", "Ray", "梁展"
+    ].map((name, idx) => ({ id: `student_${idx + 1}`, number: idx + 1, name }));
+
+    const TEACHERS = [
+      { id: "teacher_1", name: "小李" },
+      { id: "teacher_2", name: "阿宗" },
+      { id: "teacher_3", name: "老許" }
+    ];
+
+    let app = null;
+    let db = null;
+    let docRef = null;
+    let unsubscribe = null;
+    let syncReady = false;
+    let state = loadLocalState();
+    let actor = loadActor();
+    let activeTab = "dashboard";
+    let audioContext = null;
+    let audioEnabled = false;
+    let lastCurrentTeamForMilestones = null;
+    let lastObservedMoneyByTeam = {};
+
+    function buildDefaultState() {
+      const teams = Array.from({ length: DEFAULT_TEAM_COUNT }, (_, index) => ({
+        id: `team_${index + 1}`,
+        name: `第 ${index + 1} 組`,
+        order: index + 1
+      }));
+      return {
+        kind: "ai-camp-funding",
+        version: 1,
+        eventName: "人工智慧資工營 AI 科技新創競賽",
+        currentTeamId: "team_1",
+        teams,
+        investments: [],
+        reviews: {},
+        studentPasswords: {},
+        createdAtClient: Date.now(),
+        updatedAtClient: Date.now()
+      };
+    }
+
+    function normalizeState(raw) {
+      const base = buildDefaultState();
+      const merged = { ...base, ...(raw || {}) };
+      let teams = Array.isArray(merged.teams) && merged.teams.length ? merged.teams : base.teams;
+      const looksLikeOldGenericSetup = teams.length !== DEFAULT_TEAM_COUNT && teams.every(team => /^第\s*\d+\s*組$/.test(String(team?.name || "")));
+      if (looksLikeOldGenericSetup) teams = base.teams;
+      merged.teams = teams.map((team, index) => ({
+        id: team.id || `team_${index + 1}`,
+        name: team.name || `第 ${index + 1} 組`,
+        order: index + 1
+      }));
+      merged.investments = Array.isArray(merged.investments) ? merged.investments : [];
+      merged.reviews = merged.reviews && typeof merged.reviews === "object" ? merged.reviews : {};
+      merged.studentPasswords = merged.studentPasswords && typeof merged.studentPasswords === "object" ? merged.studentPasswords : {};
+      if (!merged.currentTeamId || !merged.teams.some(team => team.id === merged.currentTeamId)) {
+        merged.currentTeamId = merged.teams[0]?.id || "team_1";
+      }
+      return merged;
+    }
+
+    function loadLocalState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(LOCAL_STATE_KEY) || "null");
+        return normalizeState(saved);
+      } catch (_) {
+        return buildDefaultState();
+      }
+    }
+
+    function saveLocalState() {
+      localStorage.setItem(LOCAL_STATE_KEY, JSON.stringify(state));
+    }
+
+    function loadActor() {
+      try {
+        return JSON.parse(localStorage.getItem(LOCAL_ACTOR_KEY) || "null");
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function saveActor(nextActor) {
+      actor = nextActor;
+      localStorage.setItem(LOCAL_ACTOR_KEY, JSON.stringify(actor));
+      renderAll();
+    }
+
+    function formatMoney(value) {
+      return `$${Number(value || 0).toLocaleString("zh-TW")}`;
+    }
+
+    function clampScore(value) {
+      const number = Number(value);
+      if (Number.isNaN(number)) return "";
+      return Math.max(0, Math.min(100, number));
+    }
+
+    function getTeam(teamId) {
+      return state.teams.find(team => team.id === teamId) || state.teams[0];
+    }
+
+    function getBudgetForActor(currentActor = actor) {
+      if (!currentActor) return 0;
+      return currentActor.role === "teacher" ? TEACHER_BUDGET : STUDENT_BUDGET;
+    }
+
+    function getActorInvestments(currentActor = actor) {
+      if (!currentActor) return [];
+      return state.investments.filter(item => item.investorId === currentActor.id);
+    }
+
+    function getActorInvestedTotal(currentActor = actor) {
+      return getActorInvestments(currentActor).reduce((sum, item) => sum + Number(item.amount || 0), 0);
+    }
+
+    function getRemainingBudget(currentActor = actor) {
+      return Math.max(0, getBudgetForActor(currentActor) - getActorInvestedTotal(currentActor));
+    }
+
+    const STUDENT_GROUPS_BY_NUMBER = {
+      1: ["卓耘綺", "蔡汶芳", "陳品亦", "洪儀霖"],
+      2: ["黃楹喧", "吳湘琳", "藍元鴻", "蘇予禾"],
+      3: ["蔡承勳", "劉懷謙", "鄭宇哲"],
+      4: ["陳宥愷", "吳秉勳", "張為鈞", "張仕翰"],
+      5: ["陳姿聿", "陳品霏", "廖沄婕", "李怡靜"],
+      6: ["張義群", "蔡尚儒", "夏晨祐"],
+      7: ["廖瑾瑜", "林定禹", "陳亞翟"],
+      8: ["謝欣妘", "鄭羽絜", "劉宸亦", "林昱誠"],
+      9: ["辛宥毅", "吳岷宥", "江杬翰", "陳獻禾"],
+      10: ["林孟臻", "許子芸", "陳柔蓁", "蔡宛霖"],
+      11: ["陳汯均", "王柏鈞", "李庭宇", "李庭任"],
+      12: ["黃湧翔", "黃湧程", "方駿凱", "許凱翔"],
+      13: ["卓宇薇", "黃醴嬅", "翁婕瑜", "姚沁彤"],
+      14: ["徐堉仁", "許祐瑋", "洪子弘", "吳承煜"],
+      15: ["江宥霆", "林柏瀚", "黃冠嶧", "唐郁程"]
+    };
+
+    const STUDENT_TEAM_BY_NAME = Object.fromEntries(
+      Object.entries(STUDENT_GROUPS_BY_NUMBER).flatMap(([groupNumber, names]) =>
+        names.map(name => [name, `team_${groupNumber}`])
+      )
+    );
+
+    function getRestrictedTeamIdForActor(currentActor = actor) {
+      if (!currentActor || currentActor.role !== "student") return null;
+      return STUDENT_TEAM_BY_NAME[currentActor.name] || null;
+    }
+
+    function canActorInvestInTeam(teamId, currentActor = actor) {
+      const restrictedTeamId = getRestrictedTeamIdForActor(currentActor);
+      return !restrictedTeamId || restrictedTeamId !== teamId;
+    }
+
+    function getTeamTotals() {
+      const totals = Object.fromEntries(state.teams.map(team => [team.id, 0]));
+      for (const item of state.investments) {
+        if (totals[item.teamId] === undefined) totals[item.teamId] = 0;
+        totals[item.teamId] += Number(item.amount || 0);
+      }
+      return totals;
+    }
+
+    function getRankedTeams() {
+      const totals = getTeamTotals();
+      return [...state.teams]
+        .map(team => ({ ...team, money: totals[team.id] || 0 }))
+        .sort((a, b) => b.money - a.money || a.order - b.order);
+    }
+
+    function hasScoreValue(value) {
+      return value !== "" && value !== null && value !== undefined && !Number.isNaN(Number(value));
+    }
+
+    function getReviewAggregate(teamId) {
+      const rows = [];
+      const seen = new Set();
+      const reviewState = state.reviews || {};
+
+      for (const teacher of TEACHERS) {
+        const review = reviewState?.[teacher.id]?.[teamId] || {};
+        rows.push({
+          teacherId: teacher.id,
+          teacherName: review.teacherName || teacher.name,
+          score: hasScoreValue(review.score) ? Number(review.score) : "",
+          comment: review.comment || "",
+          updatedAtClient: review.updatedAtClient || null
+        });
+        seen.add(teacher.id);
+      }
+
+      for (const [teacherId, reviewMap] of Object.entries(reviewState)) {
+        if (seen.has(teacherId)) continue;
+        const review = reviewMap?.[teamId];
+        if (!review) continue;
+        rows.push({
+          teacherId,
+          teacherName: review.teacherName || "其他老師",
+          score: hasScoreValue(review.score) ? Number(review.score) : "",
+          comment: review.comment || "",
+          updatedAtClient: review.updatedAtClient || null
+        });
+      }
+
+      const scoredRows = rows.filter(row => hasScoreValue(row.score));
+      const avg = scoredRows.length ? scoredRows.reduce((sum, row) => sum + Number(row.score || 0), 0) / scoredRows.length : null;
+      return { rows, scoredRows, avg };
+    }
+
+    function teacherIdFromCustomName(name) {
+      const normalized = name.trim();
+      let hash = 0;
+      for (let i = 0; i < normalized.length; i += 1) {
+        hash = ((hash << 5) - hash) + normalized.charCodeAt(i);
+        hash |= 0;
+      }
+      return `teacher_custom_${Math.abs(hash)}`;
+    }
+
+    function setSyncStatus(kind, text) {
+      const dot = document.getElementById("syncDot");
+      const syncText = document.getElementById("syncText");
+      const detail = document.getElementById("syncDetail");
+      dot.className = `dot ${kind === "ok" ? "ok" : kind === "bad" ? "bad" : ""}`;
+      syncText.textContent = text;
+      if (detail) detail.textContent = text;
+    }
+
+    function setSoundStatus(kind, text) {
+      const dot = document.getElementById("soundDot");
+      const textEl = document.getElementById("soundText");
+      if (!dot || !textEl) return;
+      dot.className = `dot ${kind === "ok" ? "ok" : kind === "bad" ? "bad" : ""}`;
+      textEl.textContent = text;
+    }
+
+    async function unlockAudio(showMessage = true) {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) {
+          setSoundStatus("bad", "此裝置不支援音效");
+          return false;
+        }
+        if (!audioContext) audioContext = new AudioCtx();
+        if (audioContext.state === "suspended") await audioContext.resume();
+        audioEnabled = audioContext.state === "running";
+        if (audioEnabled && showMessage) {
+          setSoundStatus("ok", "音效已啟用");
+          playTone(880, 0, 0.08, "sine", 0.055);
+        } else if (audioEnabled) {
+          setSoundStatus("ok", "音效已啟用");
+        } else {
+          setSoundStatus("bad", "音效尚未啟用");
+        }
+        return audioEnabled;
+      } catch (error) {
+        console.warn(error);
+        setSoundStatus("bad", "音效啟用失敗");
+        return false;
+      }
+    }
+
+    function playTone(freq, startOffset, duration, type = "sine", volume = 0.12) {
+      if (!audioContext || audioContext.state !== "running") return;
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      const start = audioContext.currentTime + startOffset;
+      oscillator.type = type;
+      oscillator.frequency.setValueAtTime(freq, start);
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.exponentialRampToValueAtTime(volume, start + 0.018);
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+      oscillator.connect(gain);
+      gain.connect(audioContext.destination);
+      oscillator.start(start);
+      oscillator.stop(start + duration + 0.035);
+    }
+
+    function playMilestoneSound(threshold) {
+      if (!audioEnabled || !audioContext || audioContext.state !== "running") {
+        setSoundStatus("bad", "音效尚未啟用，請先點啟用音效");
+        return;
+      }
+      setSoundStatus("ok", `播放 ${formatMoney(threshold)} 里程碑音效`);
+      if (threshold === 1000) {
+        playTone(660, 0, 0.16, "sine", 0.12);
+      } else if (threshold === 3000) {
+        playTone(660, 0, 0.13, "triangle", 0.12);
+        playTone(880, 0.16, 0.15, "triangle", 0.12);
+      } else if (threshold === 5000) {
+        playTone(523.25, 0, 0.12, "sine", 0.12);
+        playTone(659.25, 0.12, 0.12, "sine", 0.12);
+        playTone(783.99, 0.24, 0.20, "sine", 0.13);
+      } else if (threshold === 10000) {
+        playTone(784, 0, 0.18, "triangle", 0.14);
+        playTone(1046.5, 0.18, 0.22, "triangle", 0.14);
+        playTone(1318.5, 0.42, 0.28, "triangle", 0.13);
+      } else if (threshold === 20000) {
+        playTone(523.25, 0, 0.16, "sawtooth", 0.08);
+        playTone(659.25, 0.12, 0.18, "sawtooth", 0.08);
+        playTone(783.99, 0.24, 0.20, "sawtooth", 0.09);
+        playTone(1046.5, 0.42, 0.42, "triangle", 0.15);
+        playTone(1318.5, 0.42, 0.42, "sine", 0.11);
+      } else if (threshold === 50000) {
+        playTone(392.0, 0, 0.16, "sawtooth", 0.09);
+        playTone(523.25, 0.10, 0.16, "sawtooth", 0.09);
+        playTone(659.25, 0.20, 0.18, "triangle", 0.13);
+        playTone(783.99, 0.32, 0.20, "triangle", 0.14);
+        playTone(1046.5, 0.48, 0.26, "sine", 0.16);
+        playTone(1318.5, 0.66, 0.44, "sine", 0.14);
+        playTone(1568.0, 0.66, 0.44, "triangle", 0.10);
+      }
+    }
+
+    function getMedalMilestoneInfo(threshold) {
+      if (threshold >= 50000) {
+        return { variant: "gold", flash: "golden-flash", icon: "🏆", title: "超級黃金注資 $50,000", note: "🏆 超級黃金大關" };
+      }
+      if (threshold >= 20000) {
+        return { variant: "silver", flash: "silver-flash", icon: "🥈", title: "銀牌注資 $20,000", note: "🥈 銀牌大關" };
+      }
+      if (threshold >= 10000) {
+        return { variant: "bronze", flash: "bronze-flash", icon: "🥉", title: "銅牌注資 $10,000", note: "🥉 銅牌大關" };
+      }
+      return null;
+    }
+
+    function triggerMedalAnimation(threshold) {
+      const info = getMedalMilestoneInfo(threshold);
+      if (!info) return;
+      document.querySelectorAll(".medal-burst, .golden-burst").forEach(el => el.remove());
+      const burst = document.createElement("div");
+      burst.className = `medal-burst ${info.variant}`;
+      burst.innerHTML = `<div class="medal-burst-card">${info.icon} ${info.title}</div>`;
+      document.body.appendChild(burst);
+      window.setTimeout(() => burst.remove(), 4600);
+    }
+
+    function triggerMilestoneVisual(threshold) {
+      const stage = document.querySelector(".current-stage");
+      const meta = document.getElementById("milestoneMeta");
+      const medalInfo = getMedalMilestoneInfo(threshold);
+      if (stage) {
+        stage.classList.remove("milestone-flash", "bronze-flash", "silver-flash", "golden-flash");
+        void stage.offsetWidth;
+        stage.classList.add(medalInfo ? medalInfo.flash : "milestone-flash");
+      }
+      if (medalInfo) triggerMedalAnimation(threshold);
+      if (meta) {
+        meta.textContent = medalInfo
+          ? `${medalInfo.note}！資金突破 ${formatMoney(threshold)}！`
+          : `🎉 資金突破 ${formatMoney(threshold)} 里程碑！`;
+      }
+    }
+
+    function handleFundingMilestone(teamId, currentMoney) {
+      if (!teamId) return;
+      const money = Number(currentMoney || 0);
+      if (lastCurrentTeamForMilestones !== teamId) {
+        lastCurrentTeamForMilestones = teamId;
+        lastObservedMoneyByTeam[teamId] = money;
+        return;
+      }
+      if (lastObservedMoneyByTeam[teamId] === undefined) {
+        lastObservedMoneyByTeam[teamId] = money;
+        return;
+      }
+      const previous = Number(lastObservedMoneyByTeam[teamId] || 0);
+      lastObservedMoneyByTeam[teamId] = money;
+      if (money <= previous) return;
+      const crossed = FUNDING_MILESTONES.filter(value => previous < value && money >= value);
+      if (!crossed.length) return;
+      const threshold = crossed[crossed.length - 1];
+      triggerMilestoneVisual(threshold);
+      playMilestoneSound(threshold);
+    }
+
+    async function startSync() {
+      setSyncStatus("pending", "正在連線 Firebase");
+      try {
+        if (!app) app = initializeApp(FIREBASE_CONFIG);
+        if (!db) db = getFirestore(app);
+        docRef = doc(db, COLLECTION_NAME, EVENT_ID);
+        const firstSnap = await getDoc(docRef);
+        if (!firstSnap.exists()) {
+          await setDoc(docRef, { ...buildDefaultState(), updatedAt: serverTimestamp() });
+        }
+        if (unsubscribe) unsubscribe();
+        unsubscribe = onSnapshot(docRef, snapshot => {
+          if (!snapshot.exists()) return;
+          state = normalizeState(snapshot.data());
+          saveLocalState();
+          syncReady = true;
+          setSyncStatus("ok", `已同步 ${new Date().toLocaleTimeString("zh-TW", { hour12: false })}`);
+          renderAll();
+        }, error => {
+          console.error(error);
+          syncReady = false;
+          setSyncStatus("bad", "同步中斷，請重新啟用");
+        });
+      } catch (error) {
+        console.error(error);
+        syncReady = false;
+        setSyncStatus("bad", `同步失敗：${error.message}`);
+      }
+    }
+
+    async function updateRemote(patch) {
+      state = normalizeState({ ...state, ...patch, updatedAtClient: Date.now() });
+      saveLocalState();
+      renderAll();
+      if (!syncReady || !docRef) return;
+      await updateDoc(docRef, { ...patch, updatedAt: serverTimestamp(), updatedAtClient: Date.now() });
+    }
+
+    async function appendInvestment(txn) {
+      state.investments = [...state.investments, txn];
+      saveLocalState();
+      renderAll();
+      if (!syncReady || !docRef) return;
+      await updateDoc(docRef, { investments: arrayUnion(txn), updatedAt: serverTimestamp(), updatedAtClient: Date.now() });
+    }
+
+    async function saveReview(teamId, score, comment) {
+      if (!actor || actor.role !== "teacher") return;
+      const review = {
+        score: clampScore(score),
+        comment: comment.trim(),
+        teacherName: actor.name,
+        updatedAtClient: Date.now()
+      };
+      state.reviews = state.reviews || {};
+      state.reviews[actor.id] = state.reviews[actor.id] || {};
+      state.reviews[actor.id][teamId] = review;
+      saveLocalState();
+      renderAll();
+      if (!syncReady || !docRef) return;
+      await updateDoc(docRef, {
+        [`reviews.${actor.id}.${teamId}`]: review,
+        updatedAt: serverTimestamp(),
+        updatedAtClient: Date.now()
+      });
+    }
+
+    async function clearAll() {
+      if (!actor || actor.role !== "teacher") {
+        alert("只有老師可以重製成績。");
+        return;
+      }
+      const first = confirm("確定要重製成績嗎？這會清除所有資金、投資紀錄、老師評分與評論。\n\n學生密碼與組別設定會保留。");
+      if (!first) return;
+      const second = confirm("再次確認：重製後會同步到所有裝置，且成績資料無法復原。確定重製？");
+      if (!second) return;
+      const preservedPasswords = { ...(state.studentPasswords || {}) };
+      const preservedTeams = Array.isArray(state.teams) && state.teams.length ? state.teams : buildDefaultState().teams;
+      const nextState = buildDefaultState();
+      state = normalizeState({
+        ...nextState,
+        teams: preservedTeams,
+        currentTeamId: preservedTeams[0]?.id || nextState.currentTeamId,
+        studentPasswords: preservedPasswords,
+        investments: [],
+        reviews: {},
+        updatedAtClient: Date.now()
+      });
+      saveLocalState();
+      renderAll();
+      if (syncReady && docRef) {
+        await setDoc(docRef, { ...state, updatedAt: serverTimestamp(), updatedAtClient: Date.now() });
+      }
+      alert("已重製成績並同步；學生密碼已保留。");
+    }
+
+
+
+    function getEnergyScaleMax(money) {
+      const value = Math.max(0, Number(money || 0));
+      return Math.max(50000, Math.ceil(value / 10000) * 10000);
+    }
+
+    function renderEnergyScale(scaleMax) {
+      const scale = document.getElementById("energyScale");
+      if (!scale) return;
+      const max = getEnergyScaleMax(scaleMax);
+      const ticks = [];
+      const tickStep = max <= 50000 ? 10000 : 20000;
+      for (let value = 0; value <= max; value += tickStep) {
+        ticks.push(value);
+      }
+      if (!ticks.includes(50000) && 50000 <= max) ticks.push(50000);
+      ticks.sort((a, b) => a - b);
+      const edgeClass = left => left <= 0 ? " edge-start" : (left >= 100 ? " edge-end" : "");
+      const tickHtml = ticks.map(value => {
+        const left = Math.min(100, Math.max(0, (value / max) * 100));
+        const label = value === 0 ? "$0" : `$${value / 1000}k`;
+        return `<div class="scale-tick${edgeClass(left)}" style="left:${left}%"><span>${label}</span></div>`;
+      }).join("");
+      const markerHtml = VISIBLE_MILESTONE_MARKERS
+        .filter(value => value <= max)
+        .map(value => {
+          const left = Math.min(100, Math.max(0, (value / max) * 100));
+          const label = `$${value / 1000}k`;
+          const colorClass = value === 10000 ? " bronze" : (value === 20000 ? " silver" : (value >= 50000 ? " super" : ""));
+          return `<div class="milestone-marker${colorClass}${edgeClass(left)}" title="${formatMoney(value)} 里程碑" style="left:${left}%">${label}</div>`;
+        }).join("");
+      scale.innerHTML = tickHtml + markerHtml;
+    }
+
+    function renderAll() {
+      renderActor();
+      renderTabs();
+      renderDashboard();
+      renderInvestPage();
+      renderTeacherScore();
+      renderSettings();
+    }
+
+    function renderActor() {
+      const actorPill = document.getElementById("actorPill");
+      const passwordBtn = document.getElementById("changeStudentPasswordBtn");
+      if (!actor) {
+        actorPill.textContent = "尚未登入";
+        if (passwordBtn) passwordBtn.style.display = "none";
+        return;
+      }
+      const roleText = actor.role === "teacher" ? "老師" : "學生";
+      const budget = formatMoney(getBudgetForActor(actor));
+      actorPill.textContent = `${roleText}｜${actor.name}｜額度 ${budget}`;
+      if (passwordBtn) passwordBtn.style.display = actor.role === "student" ? "inline-flex" : "none";
+    }
+
+    function getCurrentNameTypography(name) {
+      const text = String(name || "").trim();
+      const len = Array.from(text).length;
+      if (len <= 8) {
+        return { size: "clamp(42px, 6vw, 76px)", mobileSize: "clamp(44px, 11vw, 72px)", line: "1", spacing: "-0.05em" };
+      }
+      if (len <= 16) {
+        return { size: "clamp(34px, 5vw, 62px)", mobileSize: "clamp(38px, 9vw, 60px)", line: "1.02", spacing: "-0.045em" };
+      }
+      if (len <= 28) {
+        return { size: "clamp(28px, 3.8vw, 48px)", mobileSize: "clamp(30px, 7vw, 44px)", line: "1.06", spacing: "-0.04em" };
+      }
+      if (len <= 44) {
+        return { size: "clamp(23px, 3vw, 38px)", mobileSize: "clamp(24px, 5.6vw, 34px)", line: "1.10", spacing: "-0.03em" };
+      }
+      return { size: "clamp(19px, 2.25vw, 30px)", mobileSize: "clamp(20px, 4.7vw, 28px)", line: "1.16", spacing: "-0.02em" };
+    }
+
+    function renderTabs() {
+      const isTeacher = actor?.role === "teacher";
+      document.querySelectorAll(".teacher-only").forEach(el => {
+        el.classList.toggle("hidden", !isTeacher);
+      });
+      if (!isTeacher && (activeTab === "teacherScore" || activeTab === "settings")) {
+        activeTab = "dashboard";
+      }
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.tab === activeTab);
+      });
+      document.querySelectorAll(".tab-page").forEach(page => {
+        page.classList.toggle("active", page.id === activeTab);
+      });
+    }
+
+    function renderDashboard() {
+      const totals = getTeamTotals();
+      const ranked = getRankedTeams();
+      const currentTeam = getTeam(state.currentTeamId);
+      const currentMoney = totals[currentTeam?.id] || 0;
+      const topMoney = Math.max(1, ...ranked.map(team => team.money));
+      const energyScaleMax = getEnergyScaleMax(currentMoney);
+      const totalInjected = state.investments.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+      const leader = ranked[0];
+
+      const currentNameEl = document.getElementById("currentTeamName");
+      const currentDisplayName = currentTeam?.name || "尚未設定";
+      const typography = getCurrentNameTypography(currentDisplayName);
+      currentNameEl.textContent = currentDisplayName;
+      currentNameEl.title = currentDisplayName;
+      currentNameEl.style.setProperty("--current-name-size", typography.size);
+      currentNameEl.style.setProperty("--current-name-mobile-size", typography.mobileSize);
+      currentNameEl.style.setProperty("--current-name-line", typography.line);
+      currentNameEl.style.setProperty("--current-name-spacing", typography.spacing);
+      document.getElementById("currentTeamMoney").textContent = formatMoney(currentMoney);
+      document.getElementById("currentEnergyBar").style.width = `${currentMoney > 0 ? Math.max(2, Math.min(100, Math.round((currentMoney / energyScaleMax) * 100))) : 0}%`;
+      renderEnergyScale(energyScaleMax);
+      document.getElementById("currentTeamMeta").textContent = currentMoney > 0
+        ? `目前獲得 ${formatMoney(currentMoney)}，進度條刻度上限 ${formatMoney(energyScaleMax)}。`
+        : "等待資金注入中。";
+      handleFundingMilestone(currentTeam?.id, currentMoney);
+
+      document.getElementById("totalInjected").textContent = formatMoney(totalInjected);
+      document.getElementById("totalTxCount").textContent = state.investments.length.toLocaleString("zh-TW");
+      document.getElementById("leaderName").textContent = leader?.money ? leader.name : "尚無";
+      document.getElementById("leaderMoney").textContent = leader?.money ? formatMoney(leader.money) : "$0";
+
+      const teacherControl = document.getElementById("teacherCurrentControl");
+      if (teacherControl) {
+        teacherControl.innerHTML = actor?.role === "teacher"
+          ? `<span class="pill">目前組別請到「同步與設定」切換</span>`
+          : "";
+      }
+
+      const rankingList = document.getElementById("rankingList");
+      rankingList.innerHTML = ranked.map((team, index) => {
+        const width = Math.max(2, Math.round((team.money / topMoney) * 100));
+        const txCount = state.investments.filter(item => item.teamId === team.id).length;
+        const agg = getReviewAggregate(team.id);
+        const avgText = actor?.role === "teacher" && agg.avg !== null ? `｜老師平均 ${agg.avg.toFixed(1)} 分（${agg.scoredRows.length} 位）` : "";
+        return `
+          <div class="team-row">
+            <div class="rank">${index + 1}</div>
+            <div>
+              <div class="team-title">${escapeHtml(team.name)}</div>
+              <div class="team-meta">${txCount} 筆投資${avgText}</div>
+              <div class="small-bar-wrap"><div class="small-bar" style="width:${width}%"></div></div>
+            </div>
+            <div class="money">${formatMoney(team.money)}</div>
+          </div>`;
+      }).join("") || `<div class="empty">尚未設定組別。</div>`;
+
+      const recent = [...state.investments]
+        .sort((a, b) => Number(b.createdAtClient || 0) - Number(a.createdAtClient || 0))
+        .slice(0, 16);
+      document.getElementById("recentInvestments").innerHTML = recent.length ? recent.map(item => {
+        const team = getTeam(item.teamId);
+        const time = item.createdAtClient ? new Date(item.createdAtClient).toLocaleTimeString("zh-TW", { hour12: false }) : "";
+        const roleText = item.investorRole === "teacher" ? "老師" : "學生";
+        return `<div class="history-item"><span><strong>${escapeHtml(item.investorName)}</strong>（${roleText}）投資 <strong>${escapeHtml(team?.name || "未知組別")}</strong><br><small>${time}</small></span><span class="money">${formatMoney(item.amount)}</span></div>`;
+      }).join("") : `<div class="empty">還沒有資金注入。</div>`;
+    }
+
+    function renderInvestPage() {
+      const summary = document.getElementById("investorSummary");
+      const teamSelect = document.getElementById("investTeamSelect");
+      const amountSelect = document.getElementById("investAmountSelect");
+      const submitBtn = document.getElementById("submitInvestmentBtn");
+      const myList = document.getElementById("myInvestments");
+
+      if (!actor) {
+        teamSelect.innerHTML = state.teams.map(team => `<option value="${team.id}">${escapeHtml(team.name)}</option>`).join("");
+        summary.textContent = "請先選擇身份後再投資。";
+        amountSelect.innerHTML = "";
+        submitBtn.disabled = true;
+        myList.innerHTML = `<div class="empty">尚未登入。</div>`;
+        return;
+      }
+
+      const restrictedTeamId = getRestrictedTeamIdForActor(actor);
+      const restrictedTeam = restrictedTeamId ? getTeam(restrictedTeamId) : null;
+      const availableTeams = state.teams.filter(team => canActorInvestInTeam(team.id, actor));
+      teamSelect.innerHTML = availableTeams.length
+        ? availableTeams.map(team => `<option value="${team.id}">${escapeHtml(team.name)}</option>`).join("")
+        : `<option value="">沒有可投資組別</option>`;
+
+      const budget = getBudgetForActor(actor);
+      const invested = getActorInvestedTotal(actor);
+      const remaining = getRemainingBudget(actor);
+      const roleText = actor.role === "teacher" ? "老師" : "學生";
+      const restrictionText = restrictedTeam
+        ? `<br><span class="muted">你屬於 <strong>${escapeHtml(restrictedTeam.name)}</strong>，系統已隱藏自己的組別，不能投資自己組。</span>`
+        : "";
+      summary.innerHTML = `${roleText} <strong>${escapeHtml(actor.name)}</strong> 的總額度為 <strong>${formatMoney(budget)}</strong>，已投資 <strong>${formatMoney(invested)}</strong>，剩餘 <strong>${formatMoney(remaining)}</strong>。${restrictionText}`;
+
+      const steps = [];
+      for (let amount = INVEST_UNIT; amount <= remaining; amount += INVEST_UNIT) steps.push(amount);
+      amountSelect.innerHTML = steps.map(amount => `<option value="${amount}">${formatMoney(amount)}</option>`).join("");
+      submitBtn.disabled = remaining < INVEST_UNIT || !availableTeams.length;
+
+      const mine = getActorInvestments(actor).sort((a, b) => Number(b.createdAtClient || 0) - Number(a.createdAtClient || 0));
+      myList.innerHTML = mine.length ? mine.map(item => {
+        const team = getTeam(item.teamId);
+        const time = item.createdAtClient ? new Date(item.createdAtClient).toLocaleString("zh-TW", { hour12: false }) : "";
+        return `<div class="history-item"><span><strong>${escapeHtml(team?.name || "未知組別")}</strong><br><small>${time}</small></span><span class="money">${formatMoney(item.amount)}</span></div>`;
+      }).join("") : `<div class="empty">你還沒有投資紀錄。可以分批投資，每筆以 $1,000 為單位，送出後不可修改。</div>`;
+    }
+
+    function getTeacherScoreRankingRows() {
+      const rows = state.teams.map(team => {
+        const agg = getReviewAggregate(team.id);
+        return {
+          team,
+          avg: agg.avg,
+          scoredCount: agg.scoredRows.length,
+          totalTeachers: agg.rows.length,
+          order: team.order
+        };
+      });
+      return rows.sort((a, b) => {
+        const aScored = a.avg !== null;
+        const bScored = b.avg !== null;
+        if (aScored !== bScored) return aScored ? -1 : 1;
+        if (!aScored && !bScored) return a.order - b.order;
+        return Number(b.avg) - Number(a.avg) || b.scoredCount - a.scoredCount || a.order - b.order;
+      });
+    }
+
+    function renderTeacherScoreRanking() {
+      const box = document.getElementById("teacherScoreRanking");
+      if (!box) return;
+      if (!actor || actor.role !== "teacher") {
+        box.innerHTML = "";
+        return;
+      }
+      const ranked = getTeacherScoreRankingRows();
+      let scoredSeen = 0;
+      const rowsHtml = ranked.map((item, index) => {
+        const hasAvg = item.avg !== null;
+        if (hasAvg) scoredSeen += 1;
+        const rankText = hasAvg ? `第 ${scoredSeen} 名` : "未評分";
+        const scoreText = hasAvg ? `${Number(item.avg).toFixed(1)} 分` : "—";
+        const countText = `${item.scoredCount} 位老師已評分`;
+        return `
+          <div class="score-ranking-row ${hasAvg ? "" : "unscored"}">
+            <div class="rank-number">${rankText}</div>
+            <div><strong>${escapeHtml(item.team.name)}</strong><div class="team-meta">${escapeHtml(item.team.subtitle || "")}</div></div>
+            <div class="rank-score">${scoreText}</div>
+            <div class="rank-count">${countText}</div>
+          </div>`;
+      }).join("");
+      box.innerHTML = `
+        <div class="score-ranking-panel">
+          <div class="score-ranking-head">
+            <div>
+              <h3>老師成績排名</h3>
+              <p class="team-meta">系統會自動計算每組目前有幾位老師評分，平均分只採計已填分數的老師。</p>
+            </div>
+            <div class="score-pill-small">共 ${ranked.filter(item => item.avg !== null).length} 組已有成績</div>
+          </div>
+          <div class="score-ranking-list">${rowsHtml}</div>
+        </div>`;
+    }
+
+    function renderTeacherScore() {
+      const list = document.getElementById("teacherScoreList");
+      if (!actor || actor.role !== "teacher") {
+        list.innerHTML = "";
+        renderTeacherScoreRanking();
+        return;
+      }
+      list.innerHTML = state.teams.map(team => {
+        const own = state.reviews?.[actor.id]?.[team.id] || { score: "", comment: "" };
+        const agg = getReviewAggregate(team.id);
+        const avgText = agg.avg === null ? "尚無老師評分" : `目前平均 ${agg.avg.toFixed(1)} 分｜${agg.scoredRows.length} 位老師已評分`;
+        const rowsHtml = agg.rows.map(row => {
+          const scoreText = hasScoreValue(row.score) ? `${Number(row.score).toFixed(0)} 分` : "尚未評分";
+          const commentText = row.comment ? escapeHtml(row.comment) : "尚未留下評論";
+          const updatedText = row.updatedAtClient ? new Date(row.updatedAtClient).toLocaleTimeString("zh-TW", { hour12: false }) : "";
+          return `
+            <div class="teacher-review-row ${row.teacherId === actor.id ? "own-review" : ""}">
+              <div><div class="teacher-review-name">${escapeHtml(row.teacherName || "老師")}</div><div class="team-meta">${updatedText ? `更新 ${updatedText}` : "等待評分"}</div></div>
+              <div class="score-pill-small">${scoreText}</div>
+              <div>${commentText}</div>
+            </div>`;
+        }).join("");
+        return `
+          <div class="score-card" data-team-id="${team.id}">
+            <div>
+              <div class="team-title">${escapeHtml(team.name)}</div>
+              <div class="team-meta">${avgText}</div>
+              <div class="review-overview">${rowsHtml}</div>
+            </div>
+            <div class="own-score-editor">
+              <label class="form-label">我的分數
+                <input class="score-input" type="number" min="0" max="100" step="1" value="${escapeHtml(String(own.score ?? ""))}" placeholder="0-100" />
+              </label>
+              <label class="form-label">我的評論
+                <textarea class="comment-input" placeholder="給這組的回饋與建議">${escapeHtml(own.comment || "")}</textarea>
+              </label>
+              <button class="btn save-review-btn">儲存</button>
+            </div>
+          </div>`;
+      }).join("");
+      document.querySelectorAll(".save-review-btn").forEach(btn => {
+        btn.addEventListener("click", async event => {
+          const card = event.target.closest(".score-card");
+          const teamId = card.dataset.teamId;
+          const score = card.querySelector(".score-input").value;
+          const comment = card.querySelector(".comment-input").value;
+          await saveReview(teamId, score, comment);
+          alert("已儲存評分與評論。");
+        });
+      });
+      renderTeacherScoreRanking();
+    }
+
+    function renderSettings() {
+      const countInput = document.getElementById("teamCountInput");
+      const editor = document.getElementById("teamEditor");
+      if (!actor || actor.role !== "teacher") return;
+      const currentSelect = document.getElementById("settingsCurrentTeamSelect");
+      if (currentSelect) {
+        currentSelect.innerHTML = state.teams.map(team => `<option value="${team.id}" ${team.id === state.currentTeamId ? "selected" : ""}>${escapeHtml(team.name)}</option>`).join("");
+      }
+      countInput.value = state.teams.length;
+      editor.innerHTML = state.teams.map((team, index) => `
+        <div class="team-editor-row">
+          <strong>第 ${index + 1} 組</strong>
+          <input class="team-name-input" data-team-id="${team.id}" value="${escapeHtml(team.name)}" />
+        </div>`).join("");
+    }
+
+    async function hashStudentPassword(studentId, password) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(`${studentId}::${password}`);
+      const digest = await crypto.subtle.digest("SHA-256", data);
+      return [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, "0")).join("");
+    }
+
+    function getStudentPasswordRecord(studentId) {
+      return state.studentPasswords?.[studentId] || null;
+    }
+
+    function isValidNewPassword(password) {
+      return typeof password === "string" && password.trim().length >= 4;
+    }
+
+    async function updateStudentPassword(student, password) {
+      const cleanPassword = password.trim();
+      const record = {
+        hash: await hashStudentPassword(student.id, cleanPassword),
+        studentName: student.name,
+        updatedAtClient: Date.now()
+      };
+      state.studentPasswords = state.studentPasswords || {};
+      state.studentPasswords[student.id] = record;
+      saveLocalState();
+      renderAll();
+      if (syncReady && docRef) {
+        await updateDoc(docRef, {
+          [`studentPasswords.${student.id}`]: record,
+          updatedAt: serverTimestamp(),
+          updatedAtClient: Date.now()
+        });
+      }
+    }
+
+    async function verifyStudentPassword(student, password) {
+      if (password === STUDENT_MASTER_KEY) return true;
+      const record = getStudentPasswordRecord(student.id);
+      if (!record?.hash) return false;
+      return await hashStudentPassword(student.id, password) === record.hash;
+    }
+
+    async function promptSetStudentPassword(student) {
+      const password = prompt(`${student.name}，這是你第一次登入。\n請設定你的投資密碼，至少 4 個字元：`);
+      if (password === null) return false;
+      if (!isValidNewPassword(password)) {
+        alert("密碼至少需要 4 個字元，請重新設定。");
+        return false;
+      }
+      const confirmPassword = prompt("請再輸入一次密碼確認：");
+      if (confirmPassword === null) return false;
+      if (password.trim() !== confirmPassword.trim()) {
+        alert("兩次密碼不一致，請重新設定。");
+        return false;
+      }
+      await updateStudentPassword(student, password);
+      alert("密碼已設定完成，請記住自己的密碼。之後登入或修改密碼會用到它。");
+      return true;
+    }
+
+    async function loginStudent(student) {
+      if (!syncReady) {
+        const keepGoing = confirm("系統還在同步雲端資料。\n如果現在登入，可能還沒讀到最新密碼資料。\n\n建議等同步狀態變成綠色『已同步』後再登入。仍要繼續嗎？");
+        if (!keepGoing) return;
+      }
+      const record = getStudentPasswordRecord(student.id);
+      if (!record?.hash) {
+        const ok = await promptSetStudentPassword(student);
+        if (!ok) return;
+      } else {
+        const password = prompt(`${student.name}，請輸入你的投資密碼：\n\n如果忘記密碼，請找老師輸入備用鑰匙。`);
+        if (password === null) return;
+        const ok = await verifyStudentPassword(student, password.trim());
+        if (!ok) {
+          alert("密碼錯誤。忘記密碼時，請找老師使用備用鑰匙協助登入。");
+          return;
+        }
+      }
+      saveActor({ role: "student", id: student.id, name: student.name, number: student.number });
+      closeLoginModal();
+    }
+
+    async function changeCurrentStudentPassword() {
+      if (!actor || actor.role !== "student") {
+        alert("請先以學生身份登入。 ");
+        return;
+      }
+      const student = STUDENTS.find(item => item.id === actor.id);
+      if (!student) {
+        alert("找不到目前學生資料，請重新登入。 ");
+        return;
+      }
+      const oldPassword = prompt("請輸入目前密碼。\n如果忘記密碼，請找老師輸入備用鑰匙：");
+      if (oldPassword === null) return;
+      const verified = await verifyStudentPassword(student, oldPassword.trim());
+      if (!verified) {
+        alert("目前密碼錯誤，無法修改。 ");
+        return;
+      }
+      const newPassword = prompt("請輸入新密碼，至少 4 個字元：");
+      if (newPassword === null) return;
+      if (!isValidNewPassword(newPassword)) {
+        alert("新密碼至少需要 4 個字元。 ");
+        return;
+      }
+      const confirmPassword = prompt("請再輸入一次新密碼確認：");
+      if (confirmPassword === null) return;
+      if (newPassword.trim() !== confirmPassword.trim()) {
+        alert("兩次新密碼不一致，沒有修改。 ");
+        return;
+      }
+      await updateStudentPassword(student, newPassword);
+      alert("密碼已更新。 ");
+    }
+
+    function openLoginModal(force = false) {
+      if (actor && !force) return;
+      document.getElementById("loginModal").classList.add("show");
+    }
+
+    function closeLoginModal() {
+      document.getElementById("loginModal").classList.remove("show");
+    }
+
+    function populateLoginSelects() {
+      const teacherSelect = document.getElementById("teacherLoginSelect");
+      teacherSelect.innerHTML = TEACHERS.map(teacher => `<option value="${teacher.id}">${teacher.name}</option>`).join("");
+    }
+
+    function getSortedStudents() {
+      return [...STUDENTS].sort((a, b) => a.name.localeCompare(b.name, "zh-Hant-TW"));
+    }
+
+    function filterStudentsByKeyword(keyword) {
+      const clean = String(keyword || "").trim().toLowerCase();
+      const sorted = getSortedStudents();
+      if (!clean) return sorted.slice(0, 18);
+      return sorted.filter(student => {
+        const name = student.name.toLowerCase();
+        const numberText = String(student.number);
+        return name.includes(clean) || numberText === clean;
+      }).slice(0, 24);
+    }
+
+    function renderStudentSuggestions() {
+      const input = document.getElementById("studentLoginInput");
+      const box = document.getElementById("studentSuggestList");
+      if (!input || !box) return;
+      const matches = filterStudentsByKeyword(input.value);
+      if (!matches.length) {
+        box.innerHTML = `<div class="student-suggestion-empty">找不到符合的學生，請確認姓名或換打姓氏。</div>`;
+        box.classList.add("show");
+        return;
+      }
+      box.innerHTML = matches.map(student => `
+        <button type="button" class="student-suggestion" data-student-id="${student.id}">
+          <span>${escapeHtml(student.name)}</span>
+          <span class="number">${student.number} 號</span>
+        </button>
+      `).join("");
+      box.classList.add("show");
+    }
+
+    function hideStudentSuggestions() {
+      const box = document.getElementById("studentSuggestList");
+      if (box) box.classList.remove("show");
+    }
+
+    function setupLogin() {
+      const chooseStudent = document.getElementById("chooseStudent");
+      const chooseTeacher = document.getElementById("chooseTeacher");
+      const studentPane = document.getElementById("studentLoginPane");
+      const teacherPane = document.getElementById("teacherLoginPane");
+      const teacherSelect = document.getElementById("teacherLoginSelect");
+      const customWrap = document.getElementById("customTeacherWrap");
+      const studentInput = document.getElementById("studentLoginInput");
+      const studentSuggestList = document.getElementById("studentSuggestList");
+
+      chooseStudent.addEventListener("click", () => {
+        chooseStudent.classList.add("active");
+        chooseTeacher.classList.remove("active");
+        studentPane.classList.add("active");
+        teacherPane.classList.remove("active");
+        renderStudentSuggestions();
+      });
+
+      chooseTeacher.addEventListener("click", () => {
+        chooseTeacher.classList.add("active");
+        chooseStudent.classList.remove("active");
+        teacherPane.classList.add("active");
+        studentPane.classList.remove("active");
+        hideStudentSuggestions();
+      });
+
+      studentInput.addEventListener("focus", renderStudentSuggestions);
+      studentInput.addEventListener("input", renderStudentSuggestions);
+      studentInput.addEventListener("keydown", async (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          document.getElementById("studentLoginBtn").click();
+        }
+      });
+
+      studentSuggestList.addEventListener("click", (event) => {
+        const button = event.target.closest(".student-suggestion");
+        if (!button) return;
+        const student = STUDENTS.find(item => item.id === button.dataset.studentId);
+        if (!student) return;
+        studentInput.value = student.name;
+        hideStudentSuggestions();
+        studentInput.blur();
+      });
+
+      teacherSelect.addEventListener("change", () => {
+        customWrap.style.display = teacherSelect.value === "teacher_custom" ? "grid" : "none";
+      });
+
+      document.getElementById("studentLoginBtn").addEventListener("click", async () => {
+        const input = document.getElementById("studentLoginInput");
+        const typedName = input.value.trim();
+        const exactMatches = STUDENTS.filter(item => item.name === typedName);
+        if (exactMatches.length !== 1) {
+          const possibleMatches = STUDENTS.filter(item => item.name.includes(typedName));
+          if (typedName && possibleMatches.length === 1) {
+            const student = possibleMatches[0];
+            input.value = student.name;
+            hideStudentSuggestions();
+            await loginStudent(student);
+            return;
+          }
+          alert("請從建議名單中選擇完整姓名，避免登入到錯誤學生。\n可以先輸入姓氏縮小範圍，再點選自己的名字。");
+          return;
+        }
+        const student = exactMatches[0];
+        hideStudentSuggestions();
+        await loginStudent(student);
+      });
+
+      document.getElementById("teacherLoginBtn").addEventListener("click", () => {
+        const password = document.getElementById("teacherPassword").value;
+        if (password !== TEACHER_PASSWORD) {
+          alert("老師密碼錯誤。");
+          return;
+        }
+        const selectedId = teacherSelect.value;
+        let selected = TEACHERS.find(item => item.id === selectedId);
+        if (selectedId === "teacher_custom") {
+          const customName = document.getElementById("customTeacherName").value.trim();
+          if (!customName) {
+            alert("請輸入老師姓名。");
+            return;
+          }
+          selected = { id: teacherIdFromCustomName(customName), name: customName };
+        }
+        saveActor({ role: "teacher", id: selected.id, name: selected.name });
+        closeLoginModal();
+      });
+    }
+
+    function setupEvents() {
+      document.getElementById("switchIdentityBtn").addEventListener("click", () => openLoginModal(true));
+      document.getElementById("changeStudentPasswordBtn").addEventListener("click", changeCurrentStudentPassword);
+      document.getElementById("enableSoundBtn").addEventListener("click", () => unlockAudio(true));
+      document.addEventListener("pointerdown", () => {
+        if (!audioEnabled) unlockAudio(false);
+      }, { once: true });
+
+      const settingsCurrentTeamSelect = document.getElementById("settingsCurrentTeamSelect");
+      if (settingsCurrentTeamSelect) {
+        settingsCurrentTeamSelect.addEventListener("change", event => {
+          if (actor?.role === "teacher") updateRemote({ currentTeamId: event.target.value });
+        });
+      }
+
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (btn.classList.contains("teacher-only") && actor?.role !== "teacher") return;
+          activeTab = btn.dataset.tab;
+          renderAll();
+        });
+      });
+
+      document.getElementById("submitInvestmentBtn").addEventListener("click", async () => {
+        if (!actor) {
+          openLoginModal(true);
+          return;
+        }
+        const teamId = document.getElementById("investTeamSelect").value;
+        const amount = Number(document.getElementById("investAmountSelect").value);
+        const team = getTeam(teamId);
+        const remaining = getRemainingBudget(actor);
+        if (!team || amount < INVEST_UNIT || amount % INVEST_UNIT !== 0 || amount > remaining) {
+          alert("投資金額不正確，請確認剩餘額度。");
+          return;
+        }
+        if (!canActorInvestInTeam(teamId, actor)) {
+          alert("不能投資自己所在的組別，請選擇其他 AI 新創團隊。");
+          return;
+        }
+        const ok = confirm(`確定投資 ${formatMoney(amount)} 給「${team.name}」嗎？\n\n送出後不能修改或取消。`);
+        if (!ok) return;
+        const txn = {
+          id: `${actor.id}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+          investorId: actor.id,
+          investorName: actor.name,
+          investorRole: actor.role,
+          teamId,
+          teamName: team.name,
+          amount,
+          createdAtClient: Date.now()
+        };
+        await appendInvestment(txn);
+        alert(`已投資 ${formatMoney(amount)} 給「${team.name}」。`);
+      });
+
+      document.getElementById("restartSyncBtn").addEventListener("click", startSync);
+      document.getElementById("clearAllBtn").addEventListener("click", clearAll);
+
+      document.getElementById("teamCountInput").addEventListener("change", () => {
+        const count = Math.max(1, Math.min(30, Number(document.getElementById("teamCountInput").value || DEFAULT_TEAM_COUNT)));
+        const nextTeams = Array.from({ length: count }, (_, index) => {
+          const existing = state.teams[index];
+          return existing || { id: `team_${index + 1}`, name: `第 ${index + 1} 組`, order: index + 1 };
+        }).map((team, index) => ({ ...team, order: index + 1 }));
+        state.teams = nextTeams;
+        if (!state.teams.some(team => team.id === state.currentTeamId)) state.currentTeamId = state.teams[0]?.id;
+        renderSettings();
+      });
+
+      document.getElementById("saveTeamsBtn").addEventListener("click", async () => {
+        if (!actor || actor.role !== "teacher") return;
+        const inputs = [...document.querySelectorAll(".team-name-input")];
+        const nameMap = Object.fromEntries(inputs.map(input => [input.dataset.teamId, input.value.trim() || input.placeholder || input.dataset.teamId]));
+        const nextTeams = state.teams.map((team, index) => ({ ...team, name: nameMap[team.id] || team.name, order: index + 1 }));
+        await updateRemote({ teams: nextTeams, currentTeamId: state.currentTeamId || nextTeams[0]?.id });
+        alert("已儲存組別設定。");
+      });
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      populateLoginSelects();
+      setupLogin();
+      setupEvents();
+      renderAll();
+      await startSync();
+      openLoginModal(false);
+    });
+  </script>
+</body>
+</html>
